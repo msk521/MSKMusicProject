@@ -11,4 +11,11 @@
 #ifdef __OBJC__
 	#import <UIKit/UIKit.h>
 	#import <Foundation/Foundation.h>
+#import "AFHTTPRequestOperation.h"
+  #import "AFXMLRequestOperation.h"
+  #import "Reachability.h"
+
+#define BAIDUMUSIC_API(MUSICNAME) [[NSString stringWithFormat:@"http://box.zhangmen.baidu.com/x?op=12&count=1&title=%@$$$$$$",MUSICNAME] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
+
+
 #endif
