@@ -122,13 +122,13 @@ rightBar.title = MUSICSEARCH;
 
 	[operation start];
 //
-//	AFXMLRequestOperation *operation1 = [AFXMLRequestOperation XMLParserRequestOperationWithRequest:request1 success:^(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser1) {
-//		 XMLParser1.delegate = self;
-//		[XMLParser1 parse];
-//		NSLog(@"22222222222222");
-//	} failure:nil];
-//	
-//	[operation1 start];
+	AFXMLRequestOperation *operation1 = [AFXMLRequestOperation XMLParserRequestOperationWithRequest:request1 success:^(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser1) {
+		 XMLParser1.delegate = self;
+		[XMLParser1 parse];
+		NSLog(@"22222222222222");
+	} failure:nil];
+	
+	[operation1 start];
 }
 
 
