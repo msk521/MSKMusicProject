@@ -46,6 +46,7 @@
 		18A0778A17D5C1D600FDF341 /* DZProjectUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 18A0778917D5C1D600FDF341 /* DZProjectUtil.m */; };
 		18A0778E17D5D2EE00FDF341 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 18A0778D17D5D2EE00FDF341 /* MBProgressHUD.m */; };
 		18A0779217D5D5BA00FDF341 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 18A0779117D5D5BA00FDF341 /* Reachability.m */; };
+		18B654B817D883E7002712A3 /* DZMusicModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18B654B717D883E7002712A3 /* DZMusicModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -111,6 +112,8 @@
 		18A0778D17D5D2EE00FDF341 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		18A0779017D5D5BA00FDF341 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		18A0779117D5D5BA00FDF341 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		18B654B617D883E7002712A3 /* DZMusicModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DZMusicModel.h; sourceTree = "<group>"; };
+		18B654B717D883E7002712A3 /* DZMusicModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DZMusicModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,6 +171,7 @@
 		18A0771717D485B300FDF341 /* MSKMusicProject */ = {
 			isa = PBXGroup;
 			children = (
+				18B654B517D883C0002712A3 /* MusicModel */,
 				18A0778717D5C1BA00FDF341 /* ProjectUtil */,
 				18A0777E17D57B3E00FDF341 /* MSKMusicImages */,
 				18A0777817D48FB600FDF341 /* TableCell */,
@@ -311,6 +315,15 @@
 			name = Reachability;
 			sourceTree = "<group>";
 		};
+		18B654B517D883C0002712A3 /* MusicModel */ = {
+			isa = PBXGroup;
+			children = (
+				18B654B617D883E7002712A3 /* DZMusicModel.h */,
+				18B654B717D883E7002712A3 /* DZMusicModel.m */,
+			);
+			name = MusicModel;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -405,6 +418,7 @@
 				18A0778A17D5C1D600FDF341 /* DZProjectUtil.m in Sources */,
 				18A0778E17D5D2EE00FDF341 /* MBProgressHUD.m in Sources */,
 				18A0779217D5D5BA00FDF341 /* Reachability.m in Sources */,
+				18B654B817D883E7002712A3 /* DZMusicModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -519,6 +533,7 @@
 				18A0772D17D485B300FDF341 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

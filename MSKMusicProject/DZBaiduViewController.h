@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DZBaiduViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate,NSXMLParserDelegate>{
+@interface DZBaiduViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate,NSXMLParserDelegate,NSURLConnectionDelegate>{
 }
 @property (strong ,nonatomic) UISearchBar *searchBar;
 @end

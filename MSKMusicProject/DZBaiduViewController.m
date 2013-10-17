@@ -10,14 +10,18 @@
 #import "DZMusicCell.h"
 #import <QuartzCore/QuartzCore.h>
 #import "MBProgressHUD.h"
-
+#import "DZMusicModel.h"
+#import "AFJSONRequestOperation.h"
 #define MUSICSEARCH @"音乐搜索"
 #define CANCELSEARCH @"取消"
 
 @interface DZBaiduViewController (){
 	NSMutableArray *musicArr;
-	
+	DZMusicModel *currentFile;
 	MBProgressHUD *HUD;
+	NSString *currentElement;
+	NSString *rootElement;
+	NSString *currentUrl;
 }
 
 @end
@@ -50,7 +54,10 @@
 	HUD = [[MBProgressHUD  alloc] initWithView:self.view];
 	[HUD setLabelText:@"搜索中……"];
 	[self.view addSubview:HUD];
+	
 }
+
+
 
 //弹出、消失搜索框
 -(void)showSearchBar{
@@ -99,30 +106,116 @@ rightBar.title = MUSICSEARCH;
 }
 
 -(void)startRequestOpWithName:(NSString *)string{
+
 	NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:BAIDUMUSIC_API(string)]];
+	NSDictionary *parameters = [NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"%@$$$$$",string] forKey:@"title"];
+
+	// 2
+		
+
+		NSURLRequest *request1 = [NSURLRequest requestWithURL:[NSURL URLWithString:BAIDUMUSIC_API(@"求佛")]];
 	AFXMLRequestOperation *operation = [AFXMLRequestOperation XMLParserRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser) {
-		XMLParser.delegate = self;
+		 XMLParser.delegate = self;
 		[XMLParser parse];
+		NSLog(@"111111111111111");
 	} failure:nil];
-	
+
 	[operation start];
+//
+//	AFXMLRequestOperation *operation1 = [AFXMLRequestOperation XMLParserRequestOperationWithRequest:request1 success:^(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser1) {
+//		 XMLParser1.delegate = self;
+//		[XMLParser1 parse];
+//		NSLog(@"22222222222222");
+//	} failure:nil];
+//	
+//	[operation1 start];
 }
+
 
 #pragma mark - NSXMLParserDelegate
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict{
-	
+	currentElement = elementName;
+	if([elementName isEqualToString:@"durl"]||[elementName isEqualToString:@"p2p"])
+	{
+		rootElement = elementName;
+		currentFile = [[DZMusicModel alloc] init];
+		currentFile.fileReceivedData = [[NSMutableData alloc] init];
+		currentFile.fileReceivedSize=@"0";
+		currentFile.fileID=@"";
+		currentFile.fileName = self.searchBar.text;
+		currentFile.fileSize=@"未知";
+		currentFile.fileURL=@"";
+		currentFile.isDownloading=NO;
+		currentFile.isP2P=NO;
+	}
 }
 
+-(void)parser:(NSXMLParser *)parser foundCDATA:(NSData *)CDATABlock
+{
+	NSString *tmpurl=[[NSString alloc] initWithData:CDATABlock encoding:NSUTF8StringEncoding];
+	if([rootElement isEqualToString:@"durl"])
+	{
+		if([currentElement isEqualToString:@"encode"])
+		{
+			currentUrl=tmpurl;
+			NSRange range=[currentUrl rangeOfString:[currentUrl lastPathComponent]];
+			currentUrl=[currentUrl substringToIndex:range.location];
+		}
+		if([currentElement isEqualToString:@"decode"])
+		{
+			currentUrl=[currentUrl stringByAppendingString:tmpurl];
+		}
+		currentFile.fileURL=currentUrl;
+	}
+	if([rootElement isEqualToString:@"p2p"])
+	{
+		if([currentElement isEqualToString:@"url"])
+		{
+			currentUrl=tmpurl;
+			currentFile.fileURL=currentUrl;
+		}
+	}
+}
+
+
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName{
-	
+	if([elementName isEqualToString:@"durl"]||[elementName isEqualToString:@"p2p"])
+	{
+		if((![currentFile.fileURL isEqualToString:@""])&&currentFile.fileURL!=nil)
+		{
+			[musicArr addObject:currentFile];
+		}
+
+		//self.rootElement=@"";
+		//self.currentElement=@"";
+	}
 }
 
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string{
+	
 	NSLog(@"string:%@",string);
 }
 
 -(void)parserDidEndDocument:(NSXMLParser *)parser{
-	NSLog(@"stringHidden");
+	
+	for(DZMusicModel *file in musicArr)
+	{
+		if([file.fileSize isEqualToString:@"未知"]||file.fileSize==nil)
+		{
+			
+			//			ASIHTTPRequest *urlRequest=[ASIHTTPRequest requestWithURL:[NSURL URLWithString:file.fileURL]];
+//			[urlRequest setDefaultResponseEncoding:NSUTF8StringEncoding];
+//			urlRequest.delegate=self;
+//			[urlRequest setUserInfo:[NSDictionary dictionaryWithObject:file forKey:@"File"]];
+//			[NSThread detachNewThreadSelector:@selector(beginRequest:) toTarget:self withObject:urlRequest];
+//			[self.connList addObject:urlRequest];
+//			while (self.isFinished)
+//			{
+//				[[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+//			}
+		}
+	}
+	
 	[HUD hide:YES];
 }
 
